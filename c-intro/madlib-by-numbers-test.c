@@ -4,9 +4,10 @@
 #include <stdbool.h>
 #include <assert.h>
 
+#include "madlib-by-numbers.c"
 
-char* madlib_by_numbers(char* template, int word_count, char* words[]) {
-    char* newString;
 
-    return newString;
+int main() {
+    printf("%s\n", "Testing madlib-by-numbers from Problem 4");
+
 }

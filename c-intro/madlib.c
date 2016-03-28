@@ -7,6 +7,9 @@
 #include <assert.h>
 
 char* madlib(char* template, char* adjective, char* noun, char* verb) {
+
+    // template processing needed ?
+    
     char *newString = malloc(100);
     sprintf(newString, template, adjective, noun, verb);
     printf("%s\n", newString);
