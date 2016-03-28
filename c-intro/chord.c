@@ -106,7 +106,8 @@
 */
 
 /**
-    Pointers:
+    Pointers
+
     int x = 10;
     &x --> memory address of value in x, memory addresses are ints
     int *p = &x;  "p will be a variable that holds the memory address of an integer"
@@ -136,6 +137,8 @@
     int *a;
     ...is exactly same as...
     int* a;
+    ...is exacly same as...
+    int * a;
     might get confusing when
     int *a, b;  (know that a is pointer and b is variable)
     int* a, b;  (might not figure out that a is pointer and b is still only a variable)
@@ -151,26 +154,59 @@
 
 // courtesy of stackoverflow: way of finding array length
 // sizeof(array) / sizeof(array[0]) = total bits that array takes up / bits for one element
-bool checkArgs(char arg) {
+char *notes[12] = { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
+long notesLength = sizeof(notes) / sizeof(notes[0]);
+
+bool checkArgs(char *arg) {
     bool validNote = false;
-    char *notes[12] = { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
-    long notesLength = sizeof(notes) / sizeof(notes[0]);
+    printf("%s\n", arg);
     for (int index = 0; index < notesLength; index++) {
-        if (strcmp(notes[index], &arg) == 0) {
+        if (strcmp(notes[index], arg) == 0) {
             validNote = true;
         }
     }
     return validNote;
 }
 
+int noteIndex(char *arg) {
+    int thisNote;
+    for (int index = 0; index < notesLength; index++) {
+        if (strcmp(notes[index], arg) == 0) {
+            thisNote = index;
+        }
+    }
+    return thisNote;
+}
+
+char* nextNote(int currentIndex, int distance) {
+    char *note;
+    while (currentIndex < notesLength - 1 && distance > 0) {
+        note = notes[currentIndex++];
+        distance--;
+    }
+    if (distance > 0) {
+        currentIndex = 0;
+        while (currentIndex < distance) {
+            note = notes[currentIndex++];
+        }
+    }
+    return note;
+}
+
 int main(int argc, char** argv) {
     if (argc > 1) {
-        char *notes[12] = { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
-        long notesLength = sizeof(notes) / sizeof(notes[0]);
-        if (!checkArgs(*argv[1])) {
+        char *input = argv[1];
+        printf("%s\n", input);
+        if (!checkArgs(input)) {
             perror("Invalid input. Please input a piano key.");
         } else {
-
+            printf("%s\n", "inside");
+            int note = noteIndex(input);
+            printf("note: %d\n", note);
+            char *root = notes[note];
+            printf("%s: %s %s %s\n", input, root, nextNote(note, 4), nextNote(note, 7));
+            printf("%sm: %s %s %s\n", input, root, nextNote(note, 3), nextNote(note, 7));
+            
         }
     } else {
         perror("Please input at least one argument");
