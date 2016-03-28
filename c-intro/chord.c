@@ -105,18 +105,75 @@
 
 */
 
-#include <stdio.h>
+/**
+    Pointers:
+    int x = 10;
+    &x --> memory address of value in x, memory addresses are ints
+    int *p = &x;  "p will be a variable that holds the memory address of an integer"
+                    if this were float p, wouldn't work, type-error, mem addresses are ints
+    int *p;
+    p = &x;   same as above
+    p --> is 200
+
+    dereferencing
+    *p --> *(200) --> x   "deferencing returns the variable at the given memory address"
+
+    x - 10
+    p - 200
+    &x - 200
+    *p - 10
+
+    *(&x) === x
+
+    explicitly passing address into function, otherwise function just manipulates a copy of x
+
+    void changeValue(int *p) {
+        *p = 15;
+    }
+    int x = 10;
+    changeValue(&x);
+
+    int *a;
+    ...is exactly same as...
+    int* a;
+    might get confusing when
+    int *a, b;  (know that a is pointer and b is variable)
+    int* a, b;  (might not figure out that a is pointer and b is still only a variable)
+*/
+
+#include <stdio.h>  // %s - strings, %p - pointer
+#include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+
 // compile:  gcc <filename>
 // run: ./a.out
 
 // courtesy of stackoverflow: way of finding array length
 // sizeof(array) / sizeof(array[0]) = total bits that array takes up / bits for one element
-int main(int argc, char** argv) {
+bool checkArgs(char arg) {
+    bool validNote = false;
     char *notes[12] = { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
     long notesLength = sizeof(notes) / sizeof(notes[0]);
     for (int index = 0; index < notesLength; index++) {
-        printf("note: %s\n", notes[index]);
-        
+        if (strcmp(notes[index], &arg) == 0) {
+            validNote = true;
+        }
     }
+    return validNote;
+}
+
+int main(int argc, char** argv) {
+    if (argc > 1) {
+        char *notes[12] = { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
+        long notesLength = sizeof(notes) / sizeof(notes[0]);
+        if (!checkArgs(*argv[1])) {
+            perror("Invalid input. Please input a piano key.");
+        } else {
+
+        }
+    } else {
+        perror("Please input at least one argument");
+    }
+    
 }
