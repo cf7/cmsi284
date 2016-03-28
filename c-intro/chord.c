@@ -60,6 +60,8 @@
 
     maj7 --> 5 whole steps and 1 half step (octave minus half step)
     min7 --> 5 whole steps (octave minus whole step/2 half steps)
+    dim7 --> 4 whole steps and 1 half step (one half step lower than a min7)
+
 
     Only seven 7th chords:
 
@@ -69,6 +71,8 @@
         Cmaj chord + min7
         have to explicitly say maj7 chord
         play a major triad with a min7th
+
+    F#dim7  --> F#dim + dim7
 
     So from a root major triad can only get root major seventh or dominant sevenths
     Gmaj + maj7  --> Gmaj7 | G7
@@ -206,7 +210,8 @@ int main(int argc, char** argv) {
             char *root = notes[note];
             printf("%s: %s %s %s\n", input, root, nextNote(note, 4), nextNote(note, 7));
             printf("%sm: %s %s %s\n", input, root, nextNote(note, 3), nextNote(note, 7));
-            
+            printf("%s7: %s %s %s %s\n", input, root, nextNote(note, 4), nextNote(note, 7), nextNote(note, 10));
+            printf("%sdim7: %s %s %s %s\n", input, root, nextNote(note, 3), nextNote(note, 6), nextNote(note, 9));
         }
     } else {
         perror("Please input at least one argument");
