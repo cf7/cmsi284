@@ -1,11 +1,6 @@
-#include <stdio.h>
-
-// compile:  gcc <filename>
-// run: ./a.out
-
 /**
     12 notes of western music scale
-    A (A#/Bb) B C (C#/Db) D (D#/Eb) E F (F#/Gb) G (G#/Ab)
+    A (A#/Bb) ` C (C#/Db) D (D#/Eb) E F (F#/Gb) G (G#/Ab)
 
     Major scale: (formula that takes you back the root)
 
@@ -109,7 +104,19 @@
         diminished 7th:
 
 */
+
+#include <stdio.h>
+#include <string.h>
+// compile:  gcc <filename>
+// run: ./a.out
+
+// courtesy of stackoverflow: way of finding array length
+// sizeof(array) / sizeof(array[0]) = total bits that array takes up / bits for one element
 int main(int argc, char** argv) {
-
-
+    char *notes[12] = { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
+    long notesLength = sizeof(notes) / sizeof(notes[0]);
+    for (int index = 0; index < notesLength; index++) {
+        printf("note: %s\n", notes[index]);
+        
+    }
 }
