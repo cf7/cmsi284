@@ -16,9 +16,9 @@ void process_String(char* string, char number, char* words[]) {
     char *p = memchr(string, number, strlen(string));
     printf("p before: %s\n", p);
     if (p != NULL) {
-        char *p2 = malloc(sizeof(string));
+        char *p2 = malloc(strlen(string));
         strcpy(p2, memchr(string, number, strlen(string)));
-
+        
         printf("p2 just just before: %s\n", p2);
         // chop off the zero after finding it
         if (strlen(p2) > 1) {
@@ -27,21 +27,24 @@ void process_String(char* string, char number, char* words[]) {
                 printf("%s\n", "just before");
                 printf("p2 before %s\n", p2);
                 // check for null, if not found memchr returns null
-                char* word = malloc(sizeof(words[parseCharToInt(number)]));
+                // ** taking sizeof(string) is returning sizeof a pointer!
+                // ** need to store size of string array separately
+                char* word = malloc(strlen(words[parseCharToInt(number)]));
                 strcpy(word, words[parseCharToInt(number)]);
-                strcat(word, p2);
+                // if segfaulting here, probably because not enough memory allocated for word
+                strcat(word, p2); // double copying here
                 strcpy(p, word);
                 printf("p2 after %s\n", p2);
                 printf("word: %s\n", word);
-                // free(p2); // for some reason it says p2 isn't being allocated and thus does not need to be freed
                 free(word);
             }
         } else {
-            char* word = malloc(sizeof(words[parseCharToInt(number)]));
+            char* word = malloc(strlen(words[parseCharToInt(number)]));
             strcpy(word, words[parseCharToInt(number)]);
             strcpy(p, word);
             free(word);
         }
+        // free(p2); // for some reason it says p2 isn't being allocated and thus does not need to be freed
     }
 }
 
@@ -60,21 +63,34 @@ bool numbersPresent(char* string) {
 char* madlib_by_numbers(char* template, int word_count, char* words[]) {
 
     printf("size %ld\n", sizeof(template) + sizeof(*words) * word_count);
-    char *newString = malloc(sizeof(template) + sizeof(*words) * word_count);
+    char *newString = malloc(strlen(template) + strlen(*words) * word_count);
     strcpy(newString, template);
     printf("template: %s\n", template);
 
     printf("%s\n", numbersPresent(newString) ? "true" : "false");
 
+    // printf("size of word: %s\n", newString);
+    // printf("%ld\n", strlen(newString));
     // hardcoding for now
-    process_String(newString, numbers[0], words);
-    printf("newString outside: %s\n", newString);
+    int index = 0;
+    while (numbersPresent(newString)) {
+        process_String(newString, numbers[index], words);
+        printf("newString outside: %s\n", newString);
+        if (index >= numbersLength) {
+            index = 0;
+        } else {
+            index++;
+        }
+    }
 
-    process_String(newString, numbers[1], words);
-    printf("newString outside: %s\n", newString);
+    // process_String(newString, numbers[0], words);
+    // printf("newString outside: %s\n", newString);
 
-    process_String(newString, numbers[2], words);
-    printf("newString outside: %s\n", newString);
+    // process_String(newString, numbers[1], words);
+    // printf("newString outside: %s\n", newString);
+
+    // process_String(newString, numbers[2], words);
+    // printf("newString outside: %s\n", newString);
 
 
     // returns a pointer to the matching byte
