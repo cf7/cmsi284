@@ -4,26 +4,79 @@
 #include <stdbool.h>
 #include <assert.h>
 
-char *numbers[10] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+char numbers[10] = {'0','1','2','3','4','5','6','7', '8','9' };
 long numbersLength = sizeof(numbers) / sizeof(numbers[0]);
 int ascii[10] = { 48, 49, 50, 51, 52, 53, 54, 55, 56, 57 };
 
-char* process_String(char* template, char* words[]) {
-    char *p = memchr(template, '0', strlen(template));
-    // chop off the zero after finding it
-    p = memchr(p, p[1], strlen(p));
-    char* word = malloc(sizeof(words[0]) + sizeof(p));
-    strcpy(word, words[0]);
-    strcat(word, p);
-    printf("%s\n", word);
-    free(word);
-    return word;
+int parseCharToInt(char c) {
+    return c - '0';
+}
+
+void process_String(char* string, char number, char* words[]) {
+    char *p = memchr(string, number, strlen(string));
+    printf("p before: %s\n", p);
+    if (p != NULL) {
+        char *p2 = malloc(sizeof(string));
+        strcpy(p2, memchr(string, number, strlen(string)));
+
+        printf("p2 just just before: %s\n", p2);
+        // chop off the zero after finding it
+        if (strlen(p2) > 1) {
+            p2 = memchr(p2, p2[1], strlen(p2));
+            if (p2 != NULL) {
+                printf("%s\n", "just before");
+                printf("p2 before %s\n", p2);
+                // check for null, if not found memchr returns null
+                char* word = malloc(sizeof(words[parseCharToInt(number)]));
+                strcpy(word, words[parseCharToInt(number)]);
+                strcat(word, p2);
+                strcpy(p, word);
+                printf("p2 after %s\n", p2);
+                printf("word: %s\n", word);
+                // free(p2); // for some reason it says p2 isn't being allocated and thus does not need to be freed
+                free(word);
+            }
+        } else {
+            char* word = malloc(sizeof(words[parseCharToInt(number)]));
+            strcpy(word, words[parseCharToInt(number)]);
+            strcpy(p, word);
+            free(word);
+        }
+    }
+}
+
+bool numbersPresent(char* string) {
+    bool nums = false;
+    for (int index = 0; index < strlen(string); index++) {
+        for (int index2 = 0; index2 < numbersLength; index2++) {
+            if (string[index] == numbers[index2]) {
+                nums = true;
+            }
+        }
+    }
+    return nums;
 }
 
 char* madlib_by_numbers(char* template, int word_count, char* words[]) {
-    char* newString;
-    printf("%s\n", template);
-    process_String(template, words);
+
+    printf("size %ld\n", sizeof(template) + sizeof(*words) * word_count);
+    char *newString = malloc(sizeof(template) + sizeof(*words) * word_count);
+    strcpy(newString, template);
+    printf("template: %s\n", template);
+
+    printf("%s\n", numbersPresent(newString) ? "true" : "false");
+
+    // hardcoding for now
+    process_String(newString, numbers[0], words);
+    printf("newString outside: %s\n", newString);
+
+    process_String(newString, numbers[1], words);
+    printf("newString outside: %s\n", newString);
+
+    process_String(newString, numbers[2], words);
+    printf("newString outside: %s\n", newString);
+
+
     // returns a pointer to the matching byte
     
 
@@ -37,7 +90,7 @@ char* madlib_by_numbers(char* template, int word_count, char* words[]) {
         insert new word
         recursively return string
     */
-
+    free(newString);
     // returns a segfault
     return newString;
 }
