@@ -10,11 +10,17 @@
 int main() {
     printf("%s\n", "Testing madlibs from Problem 3");
 
-    assert(!strcmp(madlib("How much %s could a %s %s?", "wood", "woodchuck", "chuck"), "How much wood could a woodchuck chuck?"));
+    char* string = madlib("How much %s could a %s %s?", "wood", "woodchuck", "chuck");
+    assert(!strcmp(string, "How much wood could a woodchuck chuck?"));
+    free(string);
 
-    assert(!strcmp(madlib("%s %s %s", "brilliant", "git", "swim"), "brilliant git swim"));
+    char* string2 = madlib("%s %s %s", "brilliant", "git", "swim");
+    assert(!strcmp(string2, "brilliant git swim"));
+    free(string2);
 
-    assert(!strcmp(madlib("The %s %s likes to %s in the moonlight.", "brilliant", "git", "swim"), "The brilliant git likes to swim in the moonlight."));
-
+    char* string3 = madlib("The %s %s likes to %s in the moonlight.", "brilliant", "git", "swim");
+    assert(!strcmp(string3, "The brilliant git likes to swim in the moonlight."));
+    free(string3);
+    
     printf("%s\n", "End of tests");
 }

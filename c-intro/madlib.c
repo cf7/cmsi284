@@ -9,6 +9,6 @@ char* madlib(char* template, char* adjective, char* noun, char* verb) {
     sprintf(newString, template, adjective, noun, verb);
     
     // printf("%s\n", newString);
-    free(newString);
+    
     return newString;
 }
