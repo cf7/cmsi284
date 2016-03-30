@@ -25,9 +25,7 @@ bool isActiveNum(char num) {
 }
 
 void process_String(char* string, char number, char* words[]) {
-    printf("inside: %c\n", number);
     if (isActiveNum(number) && memchr(string, number, strlen(string))) {
-        printf("inside2: %c\n", number);
         char *p = memchr(string, number, strlen(string));
 
         char *p2 = malloc(strlen(string));
@@ -61,12 +59,6 @@ void activeNumbers(int word_count, char* words[]) {
             activeNums[index] = 'n';
         }
     }
-
-    printf("%c\n", activeNums[0]);
-    printf("%c\n", activeNums[1]);
-    printf("%c\n", activeNums[2]);
-    printf("%c\n", activeNums[3]);
-    printf("%c\n", activeNums[4]);
 }
 
 bool activeNumbersPresent(char* string) {
@@ -83,8 +75,6 @@ bool activeNumbersPresent(char* string) {
     return nums;
 }
 
-// ** if a digit exceeds the maximum word_count, it is ignored by madlib_by_numbers
-
 char* madlib_by_numbers(char* template, int word_count, char* words[]) {
 
     activeNumbers(word_count, words);
@@ -94,8 +84,6 @@ char* madlib_by_numbers(char* template, int word_count, char* words[]) {
 
     int index = 0;
     while (activeNumbersPresent(newString)) {
-        printf("%s\n", newString);
-        printf("%c\n", numbers[index]);
         process_String(newString, numbers[index], words);
         if (index >= numbersLength) {
             index = 0;
@@ -104,8 +92,7 @@ char* madlib_by_numbers(char* template, int word_count, char* words[]) {
         }
     }
 
-    printf("%s\n", newString);
-    free(newString);
+    // printf("%s\n", newString);
 
     return newString;
 }
