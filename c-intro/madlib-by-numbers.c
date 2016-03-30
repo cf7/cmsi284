@@ -50,6 +50,8 @@ bool numbersPresent(char* string) {
     return nums;
 }
 
+// ** if a digit exceeds the maximum word_count, it is ignored by madlib_by_numbers
+
 char* madlib_by_numbers(char* template, int word_count, char* words[]) {
 
     char *newString = malloc(strlen(template) + strlen(*words) * word_count);
