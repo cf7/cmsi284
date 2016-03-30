@@ -12,14 +12,13 @@ int main() {
 
     char* words_to_use[4] = { "zero", "one", "two" };
     madlib_by_numbers("abc0 1 2", 3, words_to_use);
-    printf("%s\n", "-----------------");
     madlib_by_numbers("0 1 2", 3, words_to_use);
 
-    // assert(!strcmp(madlib_by_numbers("0 1 2", 3, words_to_use), "zero one two"));
+    assert(!strcmp(madlib_by_numbers("0 1 2", 3, words_to_use), "zero one two"));
 
-    // words_to_use[3] = "three";
+    words_to_use[3] = "three";
 
-    // assert(!strcmp(madlib_by_numbers("0123", 4, words_to_use), "zeroonetwothree"));
+    assert(!strcmp(madlib_by_numbers("0123", 4, words_to_use), "zeroonetwothree"));
 
     words_to_use[0] =  "sentence";
     words_to_use[1] = "words";
@@ -28,4 +27,13 @@ int main() {
     assert(!strcmp(madlib_by_numbers("Here we have a 0 with 1 and 2 inside the 1 of the 0.", 4, words_to_use),
                                     "Here we have a sentence with words and numbers inside the words of the sentence."));
 
+    char* more_words[10] = { "verb", "noun", "adjective" };
+
+    more_words[8] = "subject";
+    more_words[9] = "predicate";
+
+    assert(!strcmp(madlib_by_numbers("Where shall we place the 0 and the 1? Can they be accompanied by an 2? Which part of the sentence is the 8 and which is the 9?", 10, more_words),
+        "Where shall we place the verb and the noun? Can they be accompanied by an adjective? Which part of the sentence is the subject and which is the predicate?"));
+
+    printf("%s\n", "End of tests");
 }

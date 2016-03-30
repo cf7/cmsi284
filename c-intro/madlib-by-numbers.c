@@ -1,4 +1,4 @@
-#include <stdio.h>  // %s - strings, %p - pointer
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
@@ -6,7 +6,6 @@
 
 char numbers[10] = {'0','1','2','3','4','5','6','7', '8','9' };
 long numbersLength = sizeof(numbers) / sizeof(numbers[0]);
-int ascii[10] = { 48, 49, 50, 51, 52, 53, 54, 55, 56, 57 };
 
 int parseCharToInt(char c) {
     return c - '0';
@@ -15,33 +14,19 @@ int parseCharToInt(char c) {
 void process_String(char* string, char number, char* words[]) {
     if (memchr(string, number, strlen(string)) != NULL) {
         char *p = memchr(string, number, strlen(string));
-        printf("p before: %s\n", p);
 
         char *p2 = malloc(strlen(string));
         strcpy(p2, memchr(string, number, strlen(string)));
-        
-        printf("p2 just just before: %s\n", p2);
-        // chop off the zero after finding it
+
         if (strlen(p2) > 1) {
+            // chop off the number after finding it
             p2 = memchr(p2, p2[1], strlen(p2));
             if (p2 != NULL) {
-                printf("%s\n", "-------");
-                printf("%s\n", "just before");
-                printf("p2 before: %s\n", p2);
-                // check for null, if not found memchr returns null
-                // ** taking sizeof(string) is returning sizeof a pointer!
-                // ** need to store size of string array separately
                 char* word = malloc(strlen(words[parseCharToInt(number)]) + strlen(p2));
                 strcpy(word, words[parseCharToInt(number)]);
-                // if segfaulting here, probably because not enough memory allocated for word
-                strcat(word, p2); // double copying here
+                strcat(word, p2);
                 strcpy(p, word);
-                printf("p2 after: %s\n", p2);
-                printf("%s\n", "==");
-                printf("word: %s\n", word);
-                printf("%s\n", "==");
                 free(word);
-                printf("%s\n", "-------");
             }
         } else {
             char* word = malloc(strlen(words[parseCharToInt(number)]));
@@ -67,51 +52,20 @@ bool numbersPresent(char* string) {
 
 char* madlib_by_numbers(char* template, int word_count, char* words[]) {
 
-    printf("size %ld\n", sizeof(template) + sizeof(*words) * word_count);
     char *newString = malloc(strlen(template) + strlen(*words) * word_count);
     strcpy(newString, template);
-    printf("template: %s\n", template);
 
-    printf("%s\n", numbersPresent(newString) ? "true" : "false");
-
-    // printf("size of word: %s\n", newString);
-    // printf("%ld\n", strlen(newString));
-    // hardcoding for now
     int index = 0;
     while (numbersPresent(newString)) {
         process_String(newString, numbers[index], words);
-        printf("newString outside: %s\n", newString);
         if (index >= numbersLength) {
             index = 0;
         } else {
             index++;
         }
     }
-
-    // process_String(newString, numbers[0], words);
-    // printf("newString outside: %s\n", newString);
-
-    // process_String(newString, numbers[1], words);
-    // printf("newString outside: %s\n", newString);
-
-    // process_String(newString, numbers[2], words);
-    // printf("newString outside: %s\n", newString);
-
-
-    // returns a pointer to the matching byte
     
-
-    /**
-        "0 1 2"
-        "word"
-        
-        identify which number is next
-        use memchr to find first occurrence
-        shift memory space of char array
-        insert new word
-        recursively return string
-    */
     free(newString);
-    // returns a segfault
+
     return newString;
 }
