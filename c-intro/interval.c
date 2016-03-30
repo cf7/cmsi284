@@ -8,6 +8,11 @@
 
 // courtesy of stackoverflow: way of finding array length
 // sizeof(array) / sizeof(array[0]) = total bits that array takes up / bits for one element
+
+// *******
+// Add clamping for arrays!!!!!! (See reverse_range_in_place code)
+// *******
+
 char *notes[12] = { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
 long notesLength = sizeof(notes) / sizeof(notes[0]);
 char *intervalNames[12] = { "minor second", "major second", "minor third", "major third", 
