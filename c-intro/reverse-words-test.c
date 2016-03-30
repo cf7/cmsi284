@@ -16,11 +16,11 @@ int main() {
 
     char word1[] = "reverse";
     reverse_words(word1);
-    // assert(!strncmp(word1, "reverse", strlen(word1)));
+    assert(!strncmp(word1, "reverse", strlen(word1)));
 
     char word2[] = "this";
     reverse_words(word2);
-    // assert(!strncmp(word, "this", strlen(word)));
+    assert(!strncmp(word2, "this", strlen(word2)));
 
     char word3[] = "0 1 2 3 4 5 6 7 8 9";
     reverse_words(word3);
@@ -34,7 +34,19 @@ int main() {
     reverse_words(word5);
     assert(!strncmp(word5, "allocated. space enough is there sure make to sentence long really a is This", strlen(word5)));
 
-    // word = "";
+    char word6[] = "   0      many    spaces    ";
+    reverse_words(word6);
+    assert(!strncmp(word6, "    spaces    many      0   ", strlen(word6)));
+
+    char word7[] = "punctuation !@# # ..,',' '.. .' ? !$@ + = - # $";
+    reverse_words(word7);
+    assert(!strncmp(word7, "$ # - = + !$@ ? .' '.. ..,',' # !@# punctuation", strlen(word7)));
+
+    // char word[] = "";
+    // reverse_words(word);
+    // assert(!strncmp(word, "", strlen(word)));
+
+    // char word[] = "";
     // reverse_words(word);
     // assert(!strncmp(word, "", strlen(word)));
 

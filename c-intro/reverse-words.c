@@ -22,21 +22,22 @@
 
 // ** reverse words without building a new string
 
-int scan(char* string, int start, int end) {
-    int index = 0;
-    for (int index2 = start; index2 < end; index2++) {
-        if (string[index2] != ' ' && string[index2] != '\t') {
-            return index2;
-        }
-    }
-    return index;
-}
+// int scan(char* string, int start, int end) {
+//     int index = 0;
+//     for (int index2 = start; index2 < end; index2++) {
+//         if (string[index2] != ' ' && string[index2] != '\t') {
+//             return index2;
+//         }
+//     }
+//     return index;
+// }
 
 void reverse_words(char* string) {
     int start_index = 0; // start index may be different when indexing word in middle of sentence
     int end_index = strlen(string) - 1; // careful on passing indices, reverse_range_in_place needs valid lengths
 
     printf("before: %s\n", string);
+
     // reverse the entire string once
     reverse_range_in_place(string, 0, end_index);
 
@@ -51,8 +52,8 @@ void reverse_words(char* string) {
                 scan_index++;
             }
             end = scan_index - 1;
+            reverse_range_in_place(string, start, end);
         }
-        reverse_range_in_place(string, start, end);
         scan_index++;
     }
 
