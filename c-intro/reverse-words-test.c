@@ -26,9 +26,9 @@ int main() {
     // // reverse_words(word);
     // // assert(!strncmp(word, "9 8 7 6 5 4 3 2 1", strlen(word)));
 
-    char word4[] = "  This is a sentence.";
+    char word4[] = "This is a sentence.";
     reverse_words(word4);
-    // assert(!strncmp(word, "sentence. a is This", strlen(word)));
+    assert(!strncmp(word4, "sentence. a is This", strlen(word4)));
 
     // word = "This is a really long sentence to make sure there is enough space allocated.";
     // reverse_words(word);

@@ -49,7 +49,7 @@ void reverse_words(char* string) {
             while (string[scan_index] != ' ' && string[scan_index] != '\t') {
                 scan_index++;
             }
-            end = scan_index;
+            end = scan_index - 1;
         }
         reverse_range_in_place(string, start, end);
         scan_index++;
