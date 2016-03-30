@@ -40,6 +40,7 @@ void reverse_words(char* string) {
     // reverse the entire string once
     reverse_range_in_place(string, 0, end_index);
 
+    // reverse each individual word after
     int scan_index = 0;
     int start = 0;
     int end = 0;
