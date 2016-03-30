@@ -21,11 +21,11 @@ int main() {
 
     // assert(!strcmp(madlib_by_numbers("0123", 4, words_to_use), "zeroonetwothree"));
 
-    // words_to_use[0] =  "sentence";
-    // words_to_use[1] = "words";
-    // words_to_use[2] = "numbers";
+    words_to_use[0] =  "sentence";
+    words_to_use[1] = "words";
+    words_to_use[2] = "numbers";
 
-    // assert(!strcmp(madlib_by_numbers("Here we have a 0 with 1 and 2 inside the 1 of the 0.", 4, words_to_use),
-    //                                 "Here we have a sentence with words and numbers inside the words of the sentence."));
+    assert(!strcmp(madlib_by_numbers("Here we have a 0 with 1 and 2 inside the 1 of the 0.", 4, words_to_use),
+                                    "Here we have a sentence with words and numbers inside the words of the sentence."));
 
 }

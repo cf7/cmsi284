@@ -13,9 +13,10 @@ int parseCharToInt(char c) {
 }
 
 void process_String(char* string, char number, char* words[]) {
-    char *p = memchr(string, number, strlen(string));
-    printf("p before: %s\n", p);
-    if (p != NULL) {
+    if (memchr(string, number, strlen(string)) != NULL) {
+        char *p = memchr(string, number, strlen(string));
+        printf("p before: %s\n", p);
+
         char *p2 = malloc(strlen(string));
         strcpy(p2, memchr(string, number, strlen(string)));
         
@@ -24,19 +25,23 @@ void process_String(char* string, char number, char* words[]) {
         if (strlen(p2) > 1) {
             p2 = memchr(p2, p2[1], strlen(p2));
             if (p2 != NULL) {
+                printf("%s\n", "-------");
                 printf("%s\n", "just before");
-                printf("p2 before %s\n", p2);
+                printf("p2 before: %s\n", p2);
                 // check for null, if not found memchr returns null
                 // ** taking sizeof(string) is returning sizeof a pointer!
                 // ** need to store size of string array separately
-                char* word = malloc(strlen(words[parseCharToInt(number)]));
+                char* word = malloc(strlen(words[parseCharToInt(number)]) + strlen(p2));
                 strcpy(word, words[parseCharToInt(number)]);
                 // if segfaulting here, probably because not enough memory allocated for word
                 strcat(word, p2); // double copying here
                 strcpy(p, word);
-                printf("p2 after %s\n", p2);
+                printf("p2 after: %s\n", p2);
+                printf("%s\n", "==");
                 printf("word: %s\n", word);
+                printf("%s\n", "==");
                 free(word);
+                printf("%s\n", "-------");
             }
         } else {
             char* word = malloc(strlen(words[parseCharToInt(number)]));
