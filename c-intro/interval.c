@@ -1,17 +1,7 @@
-#include <stdio.h>  // %s - strings, %p - pointer
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
-// compile:  gcc <filename>
-// run: ./a.out
-
-// courtesy of stackoverflow: way of finding array length
-// sizeof(array) / sizeof(array[0]) = total bits that array takes up / bits for one element
-
-// *******
-// Add clamping for arrays!!!!!! (See reverse_range_in_place code)
-// *******
 
 char *notes[12] = { "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#" };
 long notesLength = sizeof(notes) / sizeof(notes[0]);
@@ -23,8 +13,6 @@ long intervalNamesLength = sizeof(intervalNames) / sizeof(intervalNames[0]);
 bool checkArgs(char *arg1, char *arg2) {
     bool validNote1 = false;
     bool validNote2 = false;
-    printf("%s\n", arg1);
-    printf("%s\n", arg2);
     for (int index = 0; index < notesLength; index++) {
         if (!strcmp(notes[index], arg1)) {
             validNote1 = true;
@@ -77,16 +65,11 @@ int main(int argc, char** argv) {
     if (argc > 2) {
         char *firstInput = argv[1];
         char *secondInput = argv[2];
-        printf("first: %s\n", firstInput);
-        printf("second: %s\n", secondInput);
         if (!checkArgs(firstInput, secondInput)) {
             perror("Invalid inputs. Please input two piano keys.");
         } else {
-            printf("%s\n", "inside");
             int note1 = noteIndex(firstInput);
             int note2 = noteIndex(secondInput);
-            printf("note1: %d\n", note1);
-            printf("note2: %d\n", note2);
             
             printf("%s to %s is a %s\n", notes[note1], notes[note2], calcInterval(note1, note2));
         }

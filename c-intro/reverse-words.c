@@ -4,8 +4,6 @@
 #include <stdbool.h>
 #include <assert.h>
 
-// ** structuring the includes
-// ** 3/22 at 5:00 and 19:20
 #include "reverse-range-in-place.h"
 
 void reverse_words(char* string) {
