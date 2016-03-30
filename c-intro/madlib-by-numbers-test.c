@@ -4,8 +4,8 @@
 #include <stdbool.h>
 #include <assert.h>
 
-#include "madlib-by-numbers.c"
-
+#include "madlib-by-numbers.h"
+// gcc madlib-by-numbers-test.c madlib-by-numbers.c
 
 int main() {
     printf("%s\n", "Testing madlib-by-numbers from Problem 4");

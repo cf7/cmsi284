@@ -4,9 +4,8 @@
 #include <stdbool.h>
 #include <assert.h>
 
-#include "madlib.c"
-
-// screencast 3/17 ?
+#include "madlib.h"
+// gcc madlib-test.c madlib.c
 
 int main() {
     printf("%s\n", "Testing madlibs from Problem 3");

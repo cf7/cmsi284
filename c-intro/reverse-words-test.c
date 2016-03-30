@@ -4,12 +4,12 @@
 #include <stdbool.h>
 #include <assert.h>
 
-#include "reverse-words.c"
+#include "reverse-words.h"
+// gcc reverse-words-test.c reverse-words.c reverse-range-in-place.c
 
 int main() {
     printf("%s\n", "Testing reverse_words from Problem 5");
 
-    // reverse_range_in_place requires word[] instead of char* word
     char word[] = "0";
     reverse_words(word);
     assert(!strncmp(word, "0", strlen(word)));
