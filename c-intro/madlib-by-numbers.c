@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <assert.h>
 
+
+char activeNums[10];
+long activeNumsLength = sizeof(activeNums) / sizeof(activeNums[0]);
 char numbers[10] = {'0','1','2','3','4','5','6','7', '8','9' };
 long numbersLength = sizeof(numbers) / sizeof(numbers[0]);
 
@@ -11,8 +14,20 @@ int parseCharToInt(char c) {
     return c - '0';
 }
 
+bool isActiveNum(char num) {
+    bool isActive = false;
+    for (int index = 0; index < activeNumsLength; index++) {
+        if (num == activeNums[index]) {
+            isActive = true;
+        }
+    }
+    return isActive;
+}
+
 void process_String(char* string, char number, char* words[]) {
-    if (memchr(string, number, strlen(string)) != NULL) {
+    printf("inside: %c\n", number);
+    if (isActiveNum(number) && memchr(string, number, strlen(string))) {
+        printf("inside2: %c\n", number);
         char *p = memchr(string, number, strlen(string));
 
         char *p2 = malloc(strlen(string));
@@ -38,12 +53,30 @@ void process_String(char* string, char number, char* words[]) {
     }
 }
 
-bool numbersPresent(char* string) {
+void activeNumbers(int word_count, char* words[]) {
+    for (int index = 0; index < activeNumsLength; index++) {
+        if (index < word_count && words[index] != NULL) {
+            activeNums[index] = numbers[index];
+        } else {
+            activeNums[index] = 'n';
+        }
+    }
+
+    printf("%c\n", activeNums[0]);
+    printf("%c\n", activeNums[1]);
+    printf("%c\n", activeNums[2]);
+    printf("%c\n", activeNums[3]);
+    printf("%c\n", activeNums[4]);
+}
+
+bool activeNumbersPresent(char* string) {
     bool nums = false;
     for (int index = 0; index < strlen(string); index++) {
         for (int index2 = 0; index2 < numbersLength; index2++) {
             if (string[index] == numbers[index2]) {
-                nums = true;
+                if (isActiveNum(string[index])) {
+                    nums = true;
+                }
             }
         }
     }
@@ -54,11 +87,15 @@ bool numbersPresent(char* string) {
 
 char* madlib_by_numbers(char* template, int word_count, char* words[]) {
 
+    activeNumbers(word_count, words);
+
     char *newString = malloc(strlen(template) + strlen(*words) * word_count);
     strcpy(newString, template);
 
     int index = 0;
-    while (numbersPresent(newString)) {
+    while (activeNumbersPresent(newString)) {
+        printf("%s\n", newString);
+        printf("%c\n", numbers[index]);
         process_String(newString, numbers[index], words);
         if (index >= numbersLength) {
             index = 0;
@@ -66,7 +103,8 @@ char* madlib_by_numbers(char* template, int word_count, char* words[]) {
             index++;
         }
     }
-    
+
+    printf("%s\n", newString);
     free(newString);
 
     return newString;

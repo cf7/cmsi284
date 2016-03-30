@@ -1,18 +1,14 @@
-// screencast 3/10 at 32:30
-
-#include <stdio.h>  // %s - strings, %p - pointer
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <assert.h>
 
-char* madlib(char* template, char* adjective, char* noun, char* verb) {
-
-    // template processing needed ?
-    
-    char *newString = malloc(100);
+char* madlib(char* template, char* adjective, char* noun, char* verb) {    
+    char *newString = malloc(strlen(template) + strlen(adjective) + strlen(noun) + strlen(verb));
     sprintf(newString, template, adjective, noun, verb);
-    printf("%s\n", newString);
+    
+    // printf("%s\n", newString);
     free(newString);
     return newString;
 }

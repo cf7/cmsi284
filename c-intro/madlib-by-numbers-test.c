@@ -11,8 +11,7 @@ int main() {
     printf("%s\n", "Testing madlib-by-numbers from Problem 4");
 
     char* words_to_use[4] = { "zero", "one", "two" };
-    madlib_by_numbers("abc0 1 2", 3, words_to_use);
-    madlib_by_numbers("0 1 2", 3, words_to_use);
+    assert(!strcmp(madlib_by_numbers("abc0 1 2", 3, words_to_use), "abczero one two"));
 
     assert(!strcmp(madlib_by_numbers("0 1 2", 3, words_to_use), "zero one two"));
 
@@ -34,6 +33,12 @@ int main() {
 
     assert(!strcmp(madlib_by_numbers("Where shall we place the 0 and the 1? Can they be accompanied by an 2? Which part of the sentence is the 8 and which is the 9?", 10, more_words),
         "Where shall we place the verb and the noun? Can they be accompanied by an adjective? Which part of the sentence is the subject and which is the predicate?"));
+
+    // with numbers that do not have corresponding words in more_words
+    // madlib_by_numbers should ignore them
+    assert(!strcmp(madlib_by_numbers("0 1 2 8 9 7 6 5 4", 10, more_words), "verb noun adjective subject predicate 7 6 5 4"));
+    assert(!strcmp(madlib_by_numbers("Where shall 7we place the 0 and the 1? Can they be 45accompanied by an 2? Which part of the 36sentence is the 8 and which is the 9?", 10, more_words),
+        "Where shall 7we place the verb and the noun? Can they be 45accompanied by an adjective? Which part of the 36sentence is the subject and which is the predicate?"));
 
     printf("%s\n", "End of tests");
 }
