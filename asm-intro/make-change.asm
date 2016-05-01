@@ -1,21 +1,29 @@
 
-        global main
-        extern puts
-        extern printf
-        extern atoi
+                global main
+                extern puts
+                extern printf
+                extern atoi
 
-        section .text
+                section .text
 
 main:
-        push    rdi    ; holds argc
-        push    rsi    ; holds argsv
-        cmp     rdi, 2 ; check number of arguments
-        jne     error1
+            push    rdi
+            push    rsi
+            add     rsi, 8
+            cmp     rdi, 2
+            jne     error1
 
-
+            
 
 error1:
-        mov     edi, wrongNumberArgs
+            mov edi, wrongNumberArgs
+            call puts
+            jmp  done
+
+done:
+            pop     rdi
+            pop     rsi
+            ret
 
 wrongNumberArgs:
-        db      "Requires exactly one argument", 10, 0 
+            db "Requires exactly one argument", 10, 0
