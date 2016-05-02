@@ -19,14 +19,19 @@ main:   push    rbp
         xor     rax, rax 
         call    printf
 
-L0:    
+L0:     
         movsd   xmm0, [radian]  ; movsd - "move scalar double"
         call    cos             ; result stored in xmm0
+        ;movsd   xmm1, [translate]
+        ;addsd   xmm0, xmm1
         movsd   [cosine], xmm0 
         
         movsd      xmm1, [length]  ; need to multiply two registers, can't mul values
-        mulpd   xmm0, xmm1      ; multiply floating point - stores in xmm1
+        mulsd   xmm0, xmm1      ; multiply floating point - stores in xmm1
         cvtsd2si  rax, xmm0     ; convert/round to integer
+        mov     rbx, rax        ; abs value
+        neg     rax             ; abs value
+        cmovl   rax, rbx        ; abs value
         mov     [distance], rax ; save that value
         mov     rdi, format
         mov     rsi, [distance]
@@ -61,6 +66,7 @@ space:  db      0x20
 char:   db      0x2a
 distance: dq    0
 length:   dq    80.0
+translate: dq   40.0
 format:   db    "%d", 10, 0
 
 ; calculate how many zeros to pad onto char
