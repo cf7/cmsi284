@@ -9,6 +9,8 @@
 ; On entry, x in rdi and y in rsi. Return value in rax, as per convention.
 
         global  gcd
+        global  add
+        global  mod
         section .text
 
 gcd:
@@ -23,4 +25,16 @@ L1:
         mov     rdi, rsi                ; y
         mov     rsi, rdx                ; x % y
         call    gcd                     ; gcd(y, x % y)
+        ret
+
+add:
+        add   rdi, rsi
+        mov   rax, rdi
+        ret
+
+mod:
+        xor     rdx, rdx
+        mov     rax, rdi
+        div     rsi
+        mov     rax, rdx
         ret
