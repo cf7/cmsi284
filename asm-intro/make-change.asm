@@ -19,22 +19,21 @@ main:
 
 quarters:
             xor     rdx, rdx    ; rdx might be used by other processes, clear it first
-            xor     rcx, rcx
+            xor     r12, r12
             mov     r9, [quarter]
             div     r9          ; div stores remainder in rdx, result in rax (SDM pg 326)
-            mov     rcx, rdx     ; store remainder
+            mov     r12, rdx     ; store remainder
             mov     rsi, rax
             mov     rdi, quartersFormat
             xor     rax, rax
-            call    printf
+            call    printf      ; printf does operations with rcx
 
 dimes:
             xor     rdx, rdx
-            mov     rax, rcx    ; the remainder from quarters
+            mov     rax, r12    ; the remainder from quarters
             mov     r9, [dime]
             div     r9
-            xor     rcx, rcx   
-            mov     rcx, rdx    ; need to use rcx, for some reason r9 was being wiped
+            mov     r12, rdx    ; need to use rcx, for some reason r9 was being wiped
             mov     rsi, rax
             mov     rdi, dimesFormat
             xor     rax, rax    
@@ -42,12 +41,17 @@ dimes:
 
 nickels:
             xor     rdx, rdx
-            mov     rax, rcx    ; the remainder from quarters
+            mov     rax, r12    ; the remainder from quarters
             mov     r9, [nickel]
             div     r9
-            mov     rcx, rdx    
+            mov     r12, rdx    
             mov     rsi, rax
             mov     rdi, nickelsFormat
+            xor     rax, rax    
+            call    printf
+pennies:  
+            mov     rsi, r12
+            mov     rdi, penniesFormat
             xor     rax, rax    
             call    printf
             jmp     done
@@ -78,6 +82,4 @@ quarter:
 dime:  
             dq      10
 nickel:
-            db      5
-penny:
-            db      1
+            dq      5
