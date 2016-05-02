@@ -20,47 +20,54 @@ main:       push    rbp
             xor     rax, rax 
             call    printf
 
+; add by one
+; multiply result by 39.5
+
 L0:     
             movsd   xmm0, [radian]  ; movsd - "move scalar double"
             call    cos             ; result stored in xmm0
             movsd   [cosine], xmm0 
             
-            movsd      xmm1, [length]  ; need to multiply two registers, can't mul values
-            mulsd   xmm0, xmm1      ; multiply floating point - stores in xmm0
+            movsd      xmm1, [one]  
+            addsd      xmm0, xmm1
+            movsd      xmm1, [half]
+            mulsd      xmm0, xmm1
             cvtsd2si  rax, xmm0     ; convert/round to integer
-            mov     rbx, rax        ; abs value
-            neg     rax             ; abs value
-            cmovl   rax, rbx        ; abs value
             mov     [distance], rax ; save that value
 
             ;mov     rdi, format1     ; debugging
-            ;mov     rsi, [distance]
+            ;mov     rsi, [distance]    ; if segfaulting, make sure format1 is %d
             ;xor     rax, rax
             ;call    printf
 
             mov     r12, [distance]
 
 loop:     
+            push    r12
+            sub     rsp, 8
             mov     rdi, format2
             mov     rsi, space 
             xor     rax, rax
             call    printf
+            add     rsp, 8
+            pop     r12
+            cmp     r12, 0
+            je      printChar
             dec     r12
-            mov     rdi, r12
             jnz     loop
 
-
+        
 printChar:
-            mov     rdi, format1
+            mov     rdi, format2
             mov     rsi, char
             xor     rax, rax
             call    printf
 
-            mov     rdi, output     ; Display the results.
-            movsd   xmm0, [radian] 
-            movsd   xmm1, [cosine] 
-            mov     rax, 3          ; 3 vector registers!-not clearing when using vector registers
-            call    printf
+            ;mov     rdi, output     ; Display the results.
+            ;movsd   xmm0, [radian] 
+            ;movsd   xmm1, [cosine] 
+            ;mov     rax, 3          ; 3 vector registers!-not clearing when using vector registers
+            ;call    printf
 
 incAngle: 
             movsd   xmm0, [radian] 
@@ -81,14 +88,14 @@ incAngle:
 radian:     dq      0.0 
 cosine:     dq      0.0
 
-space:      db      0x20
-char:       db      0x2a
+space:      db      " ", 0
+char:       db      "*", 10, 0
 distance:   dq      0
-length:     dq      80.0
 translate:  dq      40.0
-format1:    db      "%s", 10, 0
-format2:    db      "%s"
+format2:    db      "%s", 0
 newline:    db      10
+one:        dq      1.0
+half:       dq      39.5
 ; calculate how many zeros to pad onto char
 ; multiply cos(radian) by 80 then use cvtsd2si
 ; padding zeros means don't add '10' after format strings until ready for newline
