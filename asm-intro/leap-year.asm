@@ -10,7 +10,7 @@
 main:
             push    rdi
             push    rsi
-            ;add     rsp, 8
+            ;sub     rsp, 8
             cmp     rdi, 2
             jne     error1
 
@@ -58,6 +58,7 @@ notLY:
             call    printf
             jmp     done
 done:
+            ;add    rsp, 8
             pop     rsi
             pop     rdi
             ret
