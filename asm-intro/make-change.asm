@@ -9,21 +9,48 @@
 main:
             push    rdi
             push    rsi
-            ;add     rsi, 8
+            ;add     rsp, 8
             cmp     rdi, 2
             jne     error1
 
             mov     rdi, [rsi + 8]
+            xor     rax, rax
             call    atoi        ; result of atoi call stored in rax
 
 quarters:
-            xor     r8, r8
-            mov     rdx, rax
+            xor     rdx, rdx    ; rdx might be used by other processes, clear it first
+            xor     rcx, rcx
             mov     r9, [quarter]
-            div     r9
-            mov     rsi, rdx    ; div stores remainder in rdx, result in rax (SDM pg 326)
-            jmp    print
+            div     r9          ; div stores remainder in rdx, result in rax (SDM pg 326)
+            mov     rcx, rdx     ; store remainder
+            mov     rsi, rax
+            mov     rdi, quartersFormat
+            xor     rax, rax
+            call    printf
 
+dimes:
+            xor     rdx, rdx
+            mov     rax, rcx    ; the remainder from quarters
+            mov     r9, [dime]
+            div     r9
+            xor     rcx, rcx   
+            mov     rcx, rdx    ; need to use rcx, for some reason r9 was being wiped
+            mov     rsi, rax
+            mov     rdi, dimesFormat
+            xor     rax, rax    
+            call    printf
+
+nickels:
+            xor     rdx, rdx
+            mov     rax, rcx    ; the remainder from quarters
+            mov     r9, [nickel]
+            div     r9
+            mov     rcx, rdx    
+            mov     rsi, rax
+            mov     rdi, nickelsFormat
+            xor     rax, rax    
+            call    printf
+            jmp     done
 error1:
             mov     edi, wrongNumberArgs
             call    puts
@@ -37,18 +64,20 @@ done:
 wrongNumberArgs:
             db      "Requires exactly one argument", 10, 0
 
-print:
-            mov     rdi, format     ; printf needs (rdi-format, rsi-input)
-            xor     rax, rax        ; always remember to clear rax for printf
-            call    printf
-            jmp     done
 
-format:
-            db      "%d", 10, 0
-
+quartersFormat:
+            db      "Quarters: %d", 10, 0
+dimesFormat:
+            db      "Dimes: %d", 10, 0
+nickelsFormat:
+            db      "Nickels: %d", 10, 0
+penniesFormat:
+            db      "Pennies: %d", 10, 0
 quarter:
             dq      25
 dime:  
             dq      10
 nickel:
-            dq      5
+            db      5
+penny:
+            db      1
