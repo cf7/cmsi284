@@ -10,14 +10,15 @@ main:
         push    rsi
         sub     rsp, 8                  ; must align stack before call
 
-        ;xor     rdi, rdi
-        ;xor     rsi, rsi
-        ;xor     rdx, rdx
-        ;mov     rdi, string                ; the argument string to display
-        ;mov     esi, start
-        ;mov     edx, end
-        ;call    reverse_range_in_place
+        mov     rdi, [rsi]
+        xor     rsi, rsi
+        mov     rdx, 0x7FFFFFFF
+        call    reverse_range_in_place
 
+        add rsp, 8
+        pop     rsi
+        push    rsi
+        sub     rsp, 8
         mov     rdi, [rsi]
         call    puts
 
