@@ -54,7 +54,7 @@ loop:
             cmp     r12, 0
             je      printChar
             dec     r12
-            jnz     loop
+            jnz    loop
 
         
 printChar:
