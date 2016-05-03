@@ -79,7 +79,7 @@ char* madlib_by_numbers(char* template, int word_count, char* words[]) {
 
     activeNumbers(word_count, words);
 
-    char *newString = malloc(1000000);//strlen(template) + strlen(*words) * word_count);
+    char *newString = malloc(strlen(template) + strlen(*words) * word_count);
     strcpy(newString, template);
 
     int index = 0;
