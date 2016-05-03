@@ -1,5 +1,6 @@
 
 ; Dr. Toal's gcd function from Homework #4
+;
 ; Recursive implementation of
 ;
 ;   uint64_t gcd(uint64_t x, uint64_t y) {
