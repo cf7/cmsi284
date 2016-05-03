@@ -1,4 +1,4 @@
 #!/bin/bash
 nasm -felf64 madlibs.asm
 gcc madlibs.o madlib-by-numbers.c -std=c99
-./a.out "string 1" string2 string3
+./a.out "0 1 2" string0 string1 string2

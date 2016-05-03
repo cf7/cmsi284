@@ -80,7 +80,7 @@ char* madlib_by_numbers(char* template, int word_count, char* words[]) {
     for (int index = 0; index < word_count; index++) {
         printf("%s\n", words[index]);
     }
-    
+
     activeNumbers(word_count, words);
 
     char *newString = malloc(strlen(template) + strlen(*words) * word_count);

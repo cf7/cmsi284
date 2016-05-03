@@ -8,17 +8,15 @@
         section .text
 
 main:
-       
-        ;sub     rsp, 8
+        sub     rsp, 8
+        xor     rax, rax
 
-        ;mov     rsi, rdi
-        ;mov     rdi, formatd
-        ;xor     rax, rax
-        ;call    printf
-        mov     rdi, [rsi + 8]
+        mov     r11, rdi        ; store number of args
+        sub     r11, 2
+        mov     rdi, [rsi + 8]  ; template
         add     rsi, 16
-        mov     rdx, rsi
-        mov     rsi, [filler]
+        mov     rdx, rsi        ; pointer to array of words
+        mov     rsi, r11        ; word count
         call    madlib_by_numbers
         mov     rsi, rax
         mov     rdi, formats
@@ -26,15 +24,8 @@ main:
         call    printf
 
 done:
-        
+        add     rsp, 8
         ret
 
-
-filler:
-        dq      0
-formatd:
-        db      "%d", 10, 0
 formats:
-        db      "%s", 10, 0
-one:
-        dq      1
+        db      "%s", 0
