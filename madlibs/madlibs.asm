@@ -28,4 +28,4 @@ done:
         ret
 
 formats:
-        db      "%s", 0
+        db      "%s", 10, 0
