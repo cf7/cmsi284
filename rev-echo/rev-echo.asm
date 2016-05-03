@@ -34,9 +34,4 @@ main:
 
 format:
         db      "%s", 10, 0
-string:
-        db      "hello", 10
-start:
-        db      0
-end:
-        db      5      
+    
