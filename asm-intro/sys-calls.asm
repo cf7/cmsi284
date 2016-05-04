@@ -4,29 +4,38 @@
         extern puts
         extern printf
         extern atoi
-
+                                        ; connect, accept, listen
         section .text           
                                 ; filename as input, open file syscall
                                 ; 50 - listen(), 100- times(), 
+
+                                ; file descriptor = number that represents socket
+                                ; descriptors refer to processes on file table
+                                ; file table contains modes in which files are opened
+                                ; as well as references to inode table
+                                ; inode table contains paths to actual files
 main:
         push    rdi
         push    rsi
-        
-        mov     rax, 50         ; sys_listen, returns 0 if successful
-        mov     rdi, 1          ; int fd
-        mov     rsi, 1          ; int backlog
-        syscall
+                                ; argument processing for 2 args
 
+        mov     rax, 201        ; sys_time
+        mov     rdi, [rsi + 8]  ; giving it an arbitrary file so it works
+        syscall                 ; returns time since last epoch
+                                ; "date +%s" in build file to make sure it is the right time
+        mov     rsi, rax        ; printing result just to see what is happening
         mov     rdi, format
-        mov     rsi, rax
         xor     rax, rax
         call    printf
-        ; write(1, message, 13)
-        ;mov     rax, 1                  ; system call 1 is write
-        ;mov     rdi, 1                  ; stdout is file handle 1, write needs file handle as first input
-        ;mov     rsi, message            ; address of string to output
-        ;mov     rdx, 13                 ; number of bytes to output
-        ;syscall                         ; invoke operating system to do the write
+
+        mov     rax,  253       ; sys_inotify_init - initializes a new notify file descriptor
+        syscall                 ; and returns file descriptor associated with new notify event queue
+                                ; (should be a small nonnegative int)
+        
+        mov     rsi, rax
+        mov     rdi, format
+        xor     rax, rax
+        call    printf
 
         ; exit(0)
         mov     eax, 60                 ; system call 60 is exit
@@ -41,5 +50,3 @@ done:
 
 format:
         db      "%d", 10, 0
-message:
-        db      "Hello, World", 10, 0     ; note the newline at the end

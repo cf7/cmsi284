@@ -20,3 +20,12 @@ gcc leap-year.o
 ./a.out 2025
 ./a.out 2026
 ./a.out 2027
+./a.out 2028
+./a.out 2029
+./a.out 2030
+./a.out 2031
+./a.out 2032
+nasm -felf64 sys-calls.asm
+gcc sys-calls.o
+./a.out leap-year.asm
+date +%s
