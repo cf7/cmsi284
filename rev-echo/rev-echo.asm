@@ -12,7 +12,7 @@ main:
 
         mov     rdi, [rsi]
         xor     rsi, rsi
-        mov     rdx, 0x7FFFFFFF
+        mov     rdx, 0x7FFFFFFF         ; arbitrary start and end values
         call    reverse_range_in_place
 
         add     rsp, 8

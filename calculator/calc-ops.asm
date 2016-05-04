@@ -29,8 +29,8 @@ L1:
         ret
 
 add:
-        add   rdi, rsi
-        mov   rax, rdi
+        add     rdi, rsi
+        mov     rax, rdi
         ret
 
 mod:

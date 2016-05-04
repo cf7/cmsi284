@@ -61,7 +61,7 @@ error1:
             jmp     done
 
 done:
-            add    rsp, 8
+            add     rsp, 8
             pop     rsi
             pop     rdi
             ret
