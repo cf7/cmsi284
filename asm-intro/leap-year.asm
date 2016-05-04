@@ -10,35 +10,32 @@
 main:
             push    rdi
             push    rsi
-            ;sub     rsp, 8
+            sub     rsp, 8
             cmp     rdi, 2
             jne     error1
 
             mov     rdi, [rsi + 8]
             xor     rax, rax
-            call    atoi        ; result of atoi call stored in rax
-            mov     r11, rax    ; store just in case it isn't a leap year
-            ;mov     rsi, rax
-            ;mov     rdi, yes
-            ;xor     rax, rax
-            ;call    printf
+            call    atoi            ; result of atoi call stored in rax
+            mov     r11, rax        ; store just in case it isn't a leap year
 
             xor     r12, r12
-            xor     rdx, rdx    ; clear rdx every time when using div
+            xor     rdx, rdx        ; clear rdx every time when using div
             mov     r12, [four]
             div     r12
             cmp     rdx, 0    
-            jz      isLY
+            jnz     notLY
             mov     rax, r11
             mov     r12, [hundred]
             div     r12
             cmp     rdx, 0
-            jz      notLY
+            jnz     isLY
             mov     rax, r11
             mov     r12, [fourHundred]
             div     r12
             cmp     rdx, 0
-            jne     notLY
+            jnz     notLY
+            jmp     isLY
 
 error1:
             mov     edi, wrongNumberArgs
@@ -58,7 +55,7 @@ notLY:
             call    printf
             jmp     done
 done:
-            ;add    rsp, 8
+            add     rsp, 8
             pop     rsi
             pop     rdi
             ret

@@ -15,7 +15,7 @@ main:
         mov     rdx, 0x7FFFFFFF
         call    reverse_range_in_place
 
-        add rsp, 8
+        add     rsp, 8
         pop     rsi
         push    rsi
         sub     rsp, 8
@@ -32,6 +32,4 @@ main:
 
         ret
 
-format:
-        db      "%s", 10, 0
     

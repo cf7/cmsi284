@@ -5,7 +5,7 @@
             extern  puts
 
             section .text 
-                            ; 'sd' postfix means "scalar double" for double precision floating point
+                                        ; 'sd' postfix means "scalar double" for double precision floating point
 
 
 pi:         dq          3.141592653589793 
@@ -24,7 +24,7 @@ L0:
             addsd       xmm0, xmm1
             movsd       xmm1, [half]
             mulsd       xmm0, xmm1
-            cvtsd2si    rax, xmm0     ; convert/round to integer
+            cvtsd2si    rax, xmm0       ; convert/round to integer
             mov         [distance], rax ; save that value
 
             mov         r12, [distance]

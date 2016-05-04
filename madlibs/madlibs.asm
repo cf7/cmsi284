@@ -9,7 +9,6 @@
 
 main:
         sub     rsp, 8
-        xor     rax, rax
 
         mov     r11, rdi        ; store number of args
         sub     r11, 2

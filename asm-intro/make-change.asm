@@ -9,31 +9,31 @@
 main:
             push    rdi
             push    rsi
-            ;sub     rsp, 8
+            sub     rsp, 8
             cmp     rdi, 2
             jne     error1
 
             mov     rdi, [rsi + 8]
             xor     rax, rax
-            call    atoi        ; result of atoi call stored in rax
+            call    atoi            ; result of atoi call stored in rax
 
 quarters:
-            xor     rdx, rdx    ; rdx might be used by other processes, clear it first
+            xor     rdx, rdx        ; rdx might be used by other processes, clear it first
             xor     r12, r12
             mov     r9, [quarter]
-            div     r9          ; div stores remainder in rdx, result in rax (SDM pg 326)
-            mov     r12, rdx     ; store remainder
+            div     r9              ; div stores remainder in rdx, result in rax (SDM pg 326)
+            mov     r12, rdx        ; store remainder
             mov     rsi, rax
             mov     rdi, quartersFormat
             xor     rax, rax
-            call    printf      ; printf does operations with rcx
+            call    printf          ; printf does operations with rcx
 
 dimes:
             xor     rdx, rdx
-            mov     rax, r12    ; the remainder from quarters
+            mov     rax, r12        ; the remainder from quarters
             mov     r9, [dime]
             div     r9
-            mov     r12, rdx    ; need to use rcx, for some reason r9 was being wiped
+            mov     r12, rdx        ; need to use rcx, for some reason r9 was being wiped
             mov     rsi, rax
             mov     rdi, dimesFormat
             xor     rax, rax    
@@ -41,7 +41,7 @@ dimes:
 
 nickels:
             xor     rdx, rdx
-            mov     rax, r12    ; the remainder from quarters
+            mov     rax, r12        ; the remainder from quarters
             mov     r9, [nickel]
             div     r9
             mov     r12, rdx    
@@ -61,7 +61,7 @@ error1:
             jmp     done
 
 done:
-            ;add    rsp, 8
+            add    rsp, 8
             pop     rsi
             pop     rdi
             ret

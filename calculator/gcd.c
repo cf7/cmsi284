@@ -19,5 +19,6 @@ int main(int argc, char** argv) {
     } else {
         perror("Please input exactly two arguments");
     }
-
+    
+    return 0;
 }
