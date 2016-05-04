@@ -4,20 +4,15 @@
         extern puts
         extern printf
         extern atoi
-                                        ; connect, accept, listen
+                        
         section .text           
-                                ; filename as input, open file syscall
-                                ; 50 - listen(), 100- times(), 
 
-                                ; file descriptor = number that represents socket
-                                ; descriptors refer to processes on file table
-                                ; file table contains modes in which files are opened
-                                ; as well as references to inode table
-                                ; inode table contains paths to actual files
 main:
         push    rdi
         push    rsi
-                                ; argument processing for 2 args
+        
+        cmp     rdi, 2
+        jne     error1          ; argument processing for 2 args
 
         mov     rax, 201        ; sys_time
         mov     rdi, [rsi + 8]  ; giving it an arbitrary file so it works
@@ -43,10 +38,16 @@ main:
         syscall                         ; invoke operating system to exit
 
         jmp     done
+
+error1:
+        mov     rdi, wrongNumberArgs
+        call    puts
 done:
         pop     rsi
         pop     rdi
         ret
 
+wrongNumberArgs:
+        db      "Requires exactly one argument", 10, 0
 format:
         db      "%d", 10, 0

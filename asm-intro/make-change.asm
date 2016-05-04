@@ -56,7 +56,7 @@ pennies:
             call    printf
             jmp     done
 error1:
-            mov     edi, wrongNumberArgs
+            mov     rdi, wrongNumberArgs
             call    puts
             jmp     done
 
